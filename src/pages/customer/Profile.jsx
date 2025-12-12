@@ -26,7 +26,7 @@ import {
 
 // Custom Components
 import Loader from '../../components/common/Loader';
-import { MyOrders } from './MyOrders'
+import MyOrders from './MyOrders'
 import { AddressModal } from '../../components/checkout/AddressModal';
 
 // Redux Actions
