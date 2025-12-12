@@ -26,6 +26,8 @@ import {
 
 // Custom Components
 import Loader from '../../components/common/Loader';
+import { MyOrders } from './MyOrders'
+import { AddressModal } from '../../components/checkout/AddressModal';
 
 // Redux Actions
 import { 
@@ -62,6 +64,7 @@ function Profile() {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -79,7 +82,7 @@ function Profile() {
   const { loading: loadingAddresses, addresses, error: addressesError } = addressList;
   const { userInfo } = userLogin;
 
-  console.log(user)
+  // console.log(user)
 
   // Profile form
   const profileForm = useForm({
@@ -151,6 +154,11 @@ function Profile() {
     dispatch(logout(refreshToken));
     console.log("shite");
     // navigate('/login');
+  };
+
+  const handleAddAddress = () => {
+    // setEditingAddress(null);
+    setModalOpen(true);
   };
 
   if (loadingUser) {
@@ -603,7 +611,7 @@ function Profile() {
                       <MapPin className="h-12 w-12 text-gray-300 mx-auto mb-4" />
                       <h3 className="text-lg font-medium text-gray-900 mb-2">No addresses saved</h3>
                       <p className="text-gray-500 mb-6">Add your first address to get started</p>
-                      <Button className="bg-black text-white hover:bg-gray-800 border-0">
+                      <Button className="bg-black text-white hover:bg-gray-800 border-0" onClick={handleAddAddress}>
                         Add Address
                       </Button>
                     </div>
@@ -643,52 +651,7 @@ function Profile() {
             {/* Orders Tab */}
             {activeTab === 'orders' && (
               <Card className="border border-gray-100 bg-white shadow-none">
-                <CardHeader className="border-b border-gray-100">
-                  <CardTitle className="text-lg font-medium text-black">Order History</CardTitle>
-                  <CardDescription className="text-sm text-gray-500">
-                    View your past purchases and track current orders
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-b border-gray-100">
-                          <TableHead className="text-sm font-medium text-gray-700">Order ID</TableHead>
-                          <TableHead className="text-sm font-medium text-gray-700">Date</TableHead>
-                          <TableHead className="text-sm font-medium text-gray-700">Total</TableHead>
-                          <TableHead className="text-sm font-medium text-gray-700">Status</TableHead>
-                          <TableHead className="text-sm font-medium text-gray-700"></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {/* Note: You'll need to implement order actions and reducers */}
-                        <TableRow className="border-b border-gray-50">
-                          <TableCell className="text-sm text-gray-600">SWA-001234</TableCell>
-                          <TableCell className="text-sm text-gray-600">Nov 15, 2024</TableCell>
-                          <TableCell className="text-sm font-medium text-black">$1,299.00</TableCell>
-                          <TableCell>
-                            <Badge className="bg-green-50 text-green-600 border-0">
-                              <CheckCircle className="h-3 w-3 mr-1" />
-                              Delivered
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Button variant="ghost" size="sm" className="text-gray-600">
-                              View Details
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                        {/* Add more orders as needed */}
-                      </TableBody>
-                    </Table>
-                  </div>
-                  <div className="mt-8 text-center">
-                    <p className="text-sm text-gray-500">
-                      You'll need to implement order actions and reducers to view your actual orders.
-                    </p>
-                  </div>
-                </CardContent>
+                <MyOrders />
               </Card>
             )}
 
@@ -731,16 +694,14 @@ function Profile() {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <div className="border-t border-gray-100 mt-12">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-sm text-gray-500">
-            <p>© 2024 Sound Wave Audio. All rights reserved.</p>
-            <p className="mt-2">Elevating your audio experience since 2024</p>
-          </div>
-        </div>
-      </div>
+      {/* Address Modal */}
+            <AddressModal
+              open={modalOpen}
+              onOpenChange={setModalOpen}
+              onSave={setModalOpen}
+              editAddress={setModalOpen}
+              mode="shipping"
+            />
     </div>
   );
 }

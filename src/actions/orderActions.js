@@ -142,7 +142,7 @@ export const getOrderDetails = (orderNumber) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const { data } = await apiClient.get(`/orders/${orderNumber}/`);
+    const { data } = await apiClient.get(`/orders/orders/${orderNumber}/`);
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -172,7 +172,7 @@ export const getMyOrders = (params = {}) => async (dispatch, getState) => {
     if (params.page) queryParams.append('page', params.page);
     if (params.ordering) queryParams.append('ordering', params.ordering);
 
-    const { data } = await apiClient.get(`/orders/my_orders/?${queryParams.toString()}`);
+    const { data } = await apiClient.get(`/orders/orders/my_orders/?${queryParams.toString()}`);
 
     dispatch({
       type: MY_ORDERS_SUCCESS,
@@ -356,7 +356,7 @@ export const calculateShippingQuote = (quoteData) => async (dispatch) => {
     dispatch({ type: SHIPPING_QUOTE_REQUEST });
 
     const { data } = await apiClient.post(
-      '/shipping-methods/calculate/',
+      '/orders/shipping-methods/calculate/',
       quoteData
     );
 
@@ -481,7 +481,7 @@ export const createOrderNote = (orderNumber, noteData) => async (dispatch) => {
     dispatch({ type: ORDER_NOTE_CREATE_REQUEST });
 
     const { data } = await apiClient.post(
-      `/orders/${orderNumber}/notes/`,
+      `/orders/orders/${orderNumber}/notes/`,
       noteData
     );
 
@@ -503,7 +503,7 @@ export const getOrderNotes = (orderNumber) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_NOTE_LIST_REQUEST });
 
-    const { data } = await apiClient.get(`/orders/${orderNumber}/notes/`);
+    const { data } = await apiClient.get(`/orders/orders/${orderNumber}/notes/`);
 
     dispatch({
       type: ORDER_NOTE_LIST_SUCCESS,

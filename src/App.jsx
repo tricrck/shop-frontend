@@ -17,6 +17,11 @@ import PlaceOrder from './pages/customer/PlaceOrder';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
+import { MyOrders } from './pages/customer/myOrders';
+import OrderDetails from './pages/OrderDetails';
+import { InventoryDashboard } from './pages/admin/inventory/InventoryDashboard';
+import { WarehouseManager } from './pages/admin/inventory/WarehouseManager';
+import AdminProductsPage from './pages/admin/products/AdminProductsPage';
 
 function App() {
   const [completed, setCompleted] = useState({});
@@ -39,6 +44,11 @@ function App() {
               <Route path="/shipping" element={<Shipping setCompleted={setCompleted} completed={completed} />} />
               <Route path="/payment" element={<Payment setCompleted={setCompleted} completed={completed}/>} />
               <Route path="/placeorder" element={<PlaceOrder setCompleted={setCompleted} completed={completed}/>} />
+              <Route path="/myorders" element={<MyOrders />} />
+              <Route path="/order/:id" element={<OrderDetails />} />
+              <Route path="/admin/products" element={<AdminProductsPage />} />
+              <Route path="/admin/inventory" element={<InventoryDashboard />} />
+              <Route path="/admin/inventory/warehouses" element={<WarehouseManager />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
